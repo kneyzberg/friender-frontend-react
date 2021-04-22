@@ -1,5 +1,4 @@
 
-
 import {useState} from "react";
 import {useHistory} from "react-router-dom";
 
@@ -26,9 +25,6 @@ function LoginForm({ login }) {
   return (
     <div className="LoginForm-Container">
       <h3>Log In</h3>
-      {!!formErrors.length && 
-        <Alert errors={formErrors}/>
-      }
       <form onSubmit={handleSubmit}>
           <label htmlFor="username" className="col-sm-2 col-form-label">Username</label>
           <div className="col-sm-4">
@@ -38,9 +34,11 @@ function LoginForm({ login }) {
           <div className="col-sm-4">
             <input onChange={handleChange} name="password" type="password" className="form-control" id="password" placeholder="Password" value={formData.value}/>
           </div>
-        <button class="btn btn-primary " type="submit">Submit</button>
+        <button className="btn btn-primary " type="submit">Submit</button>
       </form>
     </div>
   )
 
 }
+
+export default LoginForm;

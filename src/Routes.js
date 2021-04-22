@@ -1,12 +1,10 @@
-import {Switch, Route} from "react-router-dom";
-
+import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./Home";
 import LoginForm from "./LoginForm";
-import SignupForm from "./SingupForm";
-import CreateProfileForm from "./CreateProfileForm";
+import SignupForm from "./SignupForm";
+import CreateProfileForm from './CreateProfileForm'
 import EditProfileForm from "./EditProfileForm";
 import FriendsCarousel from "./FriendCarousel";
-
 
 
 function Routes(){

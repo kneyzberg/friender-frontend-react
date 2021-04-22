@@ -20,6 +20,7 @@ class FrienderApi {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
       console.error("API Error:", err.response);
+      console.log(err)
       let message = err.response.data.error.message;
       throw Array.isArray(message) ? message : [message];
     }
@@ -75,7 +76,7 @@ class FrienderApi {
 }
 
 // for now, put token ("testuser" / "password" on class)
-FrienderApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsImlhdCI6MTYxOTExMjg4Nn0.svhPerqrov08NTx0u-7ZxqPu_zq9dIzixVk_-hz0ezQ";
+FrienderApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsImlhdCI6MTYxOTExNjk4Nn0.5569SUn20WNDS8ApOAzaId3Rc0G6UBoYuy5xYGU48qY";
 
 
 export default FrienderApi;
