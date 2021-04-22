@@ -35,7 +35,7 @@ function SignupForm({signup}) {
     if(errorArr.length === 0){
       try {
         await signup(formData);
-        history.push("/");
+        history.push("/create-profile");
       } catch(err){
         setFormErrors(err);
       }

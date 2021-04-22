@@ -50,16 +50,11 @@ function App() {
     setIsToken(false);
   }
 
-  async function userApplyToJob(username, jobId){
-    let result = await FrienderApi.applyToJob(username, jobId);
-    setCurrentUser(user => ({...user, applications:[...user.applications, result]}));
-  }
-  
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{currentUser, setCurrentUser, userApplyToJob}}>
+      <UserContext.Provider value={{currentUser, setCurrentUser}}>
         <NavBar logout={logoutUser} />
-        <Routes login={loginUser} signup={signUpUser} />
+        <Routes login={loginUser} signup={signUpUser}/>
       </UserContext.Provider>
     </BrowserRouter>
   );

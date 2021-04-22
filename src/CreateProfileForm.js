@@ -3,19 +3,21 @@ import { useState } from "react";
 import UserContext from "./UserContext";
 import { useContext } from "react";
 import FrienderApi from "./FrienderApi";
+import { useHistory } from "react-router-dom"
 
 function CreateProfileForm() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const history = useHistory();
   const initialFormdata = {
-    "firstName": currentUser.firstName,
-    "lastName": currentUser.lastName,
-    "email": currentUser.email,
+    "interests": "",
+    "hobbies": "",
+    "zip": "",
+    "radius": 30,
     "password": ""
   }
 
   const [formData, setFormData] = useState(initialFormdata);
   const [formErrors, setFormErrors] = useState([]);
-  const [updateSuccessful, setUpdateSuccessful] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -34,15 +36,9 @@ function CreateProfileForm() {
 
       let result = await FrienderApi.updateUser(currentUser.username, userData);
       setCurrentUser(result);
-      setFormData(({
-        firstName: result.firstName,
-        lastName: result.lastName,
-        email: result.email,
-        password: ""
-      }));
-      setUpdateSuccessful(true);
+      history.push("/");
+
     } catch (err) {
-      setUpdateSuccessful(false);
       setFormErrors(err);
     }
   }
@@ -60,60 +56,59 @@ function CreateProfileForm() {
 
   return (
     <div className="ProfileForm-Container">
-    <h3>Profile</h3>
+    <h3>Create Your Profile</h3>
     {!!formErrors.length && <Alert errors={formErrors} alertType="danger"/>}
-    {updateSuccessful && <Alert alertType="success"/>}
     <form onSubmit={handleSubmit}>
-      <label htmlFor="username" className="col-sm-2 col-form-label">
-        Username
+      <label htmlFor="hobbies" className="col-sm-2 col-form-label">
+        Hobbies
     </label>
       <div className="col-sm-4">
-        <input
-          value={currentUser.username}
-          readonly
-          type="text"
-          name="username"
-          className="form-control-plaintext"
-          id="username"
+        <textarea
+          rows="5"
+          onChange={handleChange}
+          name="hobbies"
+          className="form-control"
+          id="hobbies"
+          value={formData.hobbies}
         />
       </div>
-      <label htmlFor="firstName" className="col-sm-2 col-form-label">
-        First Name
+      <label htmlFor="interests" className="col-sm-2 col-form-label">
+        Interests
+    </label>
+      <div className="col-sm-4">
+        <textarea
+          rows="5"
+          onChange={handleChange}
+          name="interests"
+          className="form-control"
+          id="interests"
+          value={formData.interests}
+        />
+      </div>
+      <label htmlFor="zip" className="col-sm-2 col-form-label">
+        Zip
     </label>
       <div className="col-sm-4">
         <input
           onChange={handleChange}
-          name="firstName"
-          type="text"
+          name="zip"
           className="form-control"
-          id="firstName"
-          value={formData.firstName}
+          id="zip"
+          value={formData.zip}
         />
       </div>
-      <label htmlFor="lastName" className="col-sm-2 col-form-label">
-        Last Name
+      <label htmlFor="radius" className="col-sm-2 col-form-label">
+        Friend Radius
+        <p>{formData.radius} miles</p>
     </label>
       <div className="col-sm-4">
         <input
           onChange={handleChange}
-          name="lastName"
-          type="text"
+          name="radius"
+          type="range"
           className="form-control"
-          id="lastName"
-          value={formData.lastName}
-        />
-      </div>
-      <label htmlFor="email" className="col-sm-2 col-form-label">
-        Email
-    </label>
-      <div className="col-sm-4">
-        <input
-          onChange={handleChange}
-          name="email"
-          type="email"
-          className="form-control"
-          id="email"
-          value={formData.email}
+          id="radius"
+          value={formData.radius}
         />
       </div>
       <label htmlFor="password" className="col-sm-2 col-form-label">
@@ -130,7 +125,7 @@ function CreateProfileForm() {
         />
       </div>
       <button class="btn btn-primary " type="submit">
-        Save Changes
+        Create Profile!
     </button>
     </form>
   </div>

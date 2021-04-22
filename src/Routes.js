@@ -7,7 +7,7 @@ import EditProfileForm from "./EditProfileForm";
 import FriendsCarousel from "./FriendCarousel";
 
 
-function Routes(){
+function Routes({login, signup}){
 
   return (
     <Switch>
@@ -15,10 +15,10 @@ function Routes(){
         <Home />
       </Route>
       <Route exact path="/login">
-        <LoginForm />
+        <LoginForm login={login}/>
       </Route>
       <Route path="/signup">
-        <SignupForm/>
+        <SignupForm signup={signup}/>
       </Route>
       <Route exact path="/create-profile">
         <CreateProfileForm/>

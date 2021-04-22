@@ -158,7 +158,8 @@ function EditProfileForm() {
         />
       </div>
       <label htmlFor="radius" className="col-sm-2 col-form-label">
-        Radius
+        Friend Radius 
+        <p>{formData.radius} miles</p>
     </label>
       <div className="col-sm-4">
         <input
@@ -169,6 +170,7 @@ function EditProfileForm() {
           id="radius"
           value={formData.radius}
         />
+  
       </div>
       <label htmlFor="password" className="col-sm-2 col-form-label">
         Confirm Password
