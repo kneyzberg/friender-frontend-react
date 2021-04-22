@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./Carousel.css";
+import { Card, CardBody, CardText, CardTitle, Button } from "reactstrap";
 import image1 from "./images/image1.jpg";
 import image2 from "./images/image2.jpg";
 import image3 from "./images/image3.jpg";
-import Card from "./Card";
+import FriendApplicant from "./FriendApplicant";
 
-function Carousel(props) {
+function FriendCarousel(props) {
   const [cardIdx, setCardIdx] = useState(0);
   const card = props.cardData[cardIdx];
   const total = props.cardData.length;
@@ -16,29 +17,36 @@ function Carousel(props) {
   const rightVisibility = cardIdx === total-1 ? 'hidden' : '';
 
   return (
-    <div className="Carousel">
-      <h1>{props.title}</h1>
-      <div className="Carousel-main">
-        <i
-          className={`fas fa-chevron-circle-left fa-2x ${leftVisibility}`}
-          onClick={goBack}
-        />
-        <Card
-          caption={card.caption}
-          src={card.src}
-          currNum={cardIdx + 1}
-          totalNum={total}
-        />
-        <i
-          className={`fas fa-chevron-circle-right fa-2x ${rightVisibility}`}
-          onClick={goForward}
-        />
-      </div>
-    </div>
+    <Card>
+      <CardBody>
+        <div className="Carousel">
+          <h1>{props.title}</h1>
+          <div className="Carousel-main">
+            <i
+              className={`fas fa-chevron-circle-left fa-2x ${leftVisibility}`}
+              onClick={goBack}
+            />
+            <FriendApplicant
+              caption={card.caption}
+              src={card.src}
+              currNum={cardIdx + 1}
+              totalNum={total}
+            />
+            <i
+              className={`fas fa-chevron-circle-right fa-2x ${rightVisibility}`}
+              onClick={goForward}
+            />
+            {/* Buttons to either ignore or like user!  */}
+          </div>
+        </div>
+      </CardBody>
+    </Card>
+
+    
   );
 }
 
-Carousel.defaultProps = {
+FriendCarousel.defaultProps = {
   cardData: [
     {
       src: image1,
@@ -56,4 +64,4 @@ Carousel.defaultProps = {
   title: "Shells from far away beaches."
 };
 
-export default Carousel;
+export default  FriendCarousel;
