@@ -12,30 +12,37 @@ function CreateProfileForm() {
     "interests": "",
     "hobbies": "",
     "zip": "",
-    "radius": 30,
-    "password": ""
+    "radius": "30",
+    "password": "",
   }
 
   const [formData, setFormData] = useState(initialFormdata);
+  const [fileData, setFileData] = useState(null);
+  
   const [formErrors, setFormErrors] = useState([]);
 
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((f) => ({ ...f, [name]: value }));
+
   }
   async function handleSubmit(e) {
     e.preventDefault();
     const formValidated = validateForm(formData);
-    if (!formValidated) return; 
-    
+    if (!formValidated) return;
+
     let userData = { ...formData };
     delete userData.password;
+    delete userData.upl;
     try {
       const passwordData = { username: currentUser.username, password: formData.password };
-           await FrienderApi.confirmPassword(passwordData);
+      await FrienderApi.confirmPassword(passwordData);
 
       let result = await FrienderApi.updateUser(currentUser.username, userData);
       setCurrentUser(result);
+
+      let imageUpload = await FrienderApi.uploadImage(currentUser.username, formData.upl);
+
       history.push("/");
 
     } catch (err) {
@@ -56,79 +63,92 @@ function CreateProfileForm() {
 
   return (
     <div className="ProfileForm-Container">
-    <h3>Create Your Profile</h3>
-    {!!formErrors.length && <Alert errors={formErrors} alertType="danger"/>}
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="hobbies" className="col-sm-2 col-form-label">
-        Hobbies
+      <h3>Create Your Profile</h3>
+      {!!formErrors.length && <Alert errors={formErrors} alertType="danger" />}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="hobbies" className="col-sm-2 col-form-label">
+          Hobbies
     </label>
-      <div className="col-sm-4">
-        <textarea
-          rows="5"
-          onChange={handleChange}
-          name="hobbies"
-          className="form-control"
-          id="hobbies"
-          value={formData.hobbies}
-        />
-      </div>
-      <label htmlFor="interests" className="col-sm-2 col-form-label">
-        Interests
+        <div className="col-sm-4">
+          <textarea
+            rows="5"
+            onChange={handleChange}
+            name="hobbies"
+            className="form-control"
+            id="hobbies"
+            value={formData.hobbies}
+          />
+        </div>
+        <label htmlFor="interests" className="col-sm-2 col-form-label">
+          Interests
     </label>
-      <div className="col-sm-4">
-        <textarea
-          rows="5"
-          onChange={handleChange}
-          name="interests"
-          className="form-control"
-          id="interests"
-          value={formData.interests}
-        />
-      </div>
-      <label htmlFor="zip" className="col-sm-2 col-form-label">
-        Zip
+        <div className="col-sm-4">
+          <textarea
+            rows="5"
+            onChange={handleChange}
+            name="interests"
+            className="form-control"
+            id="interests"
+            value={formData.interests}
+          />
+        </div>
+        <label htmlFor="zip" className="col-sm-2 col-form-label">
+          Zip
     </label>
-      <div className="col-sm-4">
-        <input
-          onChange={handleChange}
-          name="zip"
-          className="form-control"
-          id="zip"
-          value={formData.zip}
-        />
-      </div>
-      <label htmlFor="radius" className="col-sm-2 col-form-label">
-        Friend Radius
+        <div className="col-sm-4">
+          <input
+            onChange={handleChange}
+            name="zip"
+            className="form-control"
+            id="zip"
+            value={formData.zip}
+          />
+        </div>
+        <label htmlFor="radius" className="col-sm-2 col-form-label">
+          Friend Radius
         <p>{formData.radius} miles</p>
+        </label>
+        <div className="col-sm-4">
+          <input
+            onChange={handleChange}
+            name="radius"
+            type="range"
+            className="form-control"
+            id="radius"
+            value={formData.radius}
+          />
+        </div>
+        <label htmlFor="upl" className="col-sm-2 col-form-label">
+          Add a Profile Picture!
+        </label>
+        <div className="col-sm-7">
+          <input
+            onChange={handleChange}
+            name="upl"
+            type="file"
+            className="form-control"
+            id="upl"
+            value={formData.upl}
+          />
+        </div>
+        <label htmlFor="password" className="col-sm-2 col-form-label">
+          Confirm Password
     </label>
-      <div className="col-sm-4">
-        <input
-          onChange={handleChange}
-          name="radius"
-          type="range"
-          className="form-control"
-          id="radius"
-          value={formData.radius}
-        />
-      </div>
-      <label htmlFor="password" className="col-sm-2 col-form-label">
-        Confirm Password
-    </label>
-      <div className="col-sm-4">
-        <input
-          onChange={handleChange}
-          name="password"
-          type="password"
-          className="form-control"
-          id="password"
-          value={formData.password}
-        />
-      </div>
-      <button class="btn btn-primary " type="submit">
-        Create Profile!
+        <div className="col-sm-4">
+          <input
+            onChange={handleChange}
+            name="password"
+            type="password"
+            className="form-control"
+            id="password"
+            value={formData.password}
+          />
+        </div>
+        <button class="btn btn-primary " type="submit">
+          Create Profile!
     </button>
-    </form>
-  </div>
+      </form>
+    </div>
   )
 }
 

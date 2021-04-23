@@ -72,11 +72,15 @@ class FrienderApi {
     return res.friends;
   }
 
+  static async uploadImage(username, fileData){
+    let res = await this.request(`users/${username}/upload`, fileData, "post");
+    return res.image;
+  }
  
 }
 
 // for now, put token ("testuser" / "password" on class)
-FrienderApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsImlhdCI6MTYxOTExNjk4Nn0.5569SUn20WNDS8ApOAzaId3Rc0G6UBoYuy5xYGU48qY";
+// FrienderApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMSIsImlhdCI6MTYxOTExNjk4Nn0.5569SUn20WNDS8ApOAzaId3Rc0G6UBoYuy5xYGU48qY";
 
 
 export default FrienderApi;
